@@ -6,8 +6,8 @@ from splinter import Browser
 import time
 
 def scrape():
-
-    ##########################Code for getting featured stories from NASA mars mission site#####################
+    ###########################################################################################################
+    ##########################Code for getting featured stories from NASA mars mission site####################
     # NASA mars site information
     #using request and soup
     nasa_url = "https://mars.nasa.gov/news/"
@@ -33,7 +33,8 @@ def scrape():
         except AttributeError as e:
             print(e)
 
-    #####Code for getting featured mars image from JPL site######
+    ############################################################################
+    #############Code for getting featured mars image from JPL site#############
     #setup for splinter
     executable_path = {'executable_path': 'c:/bin/chromedriver.exe'}
     browser = Browser('chrome', **executable_path, headless=True)
@@ -59,10 +60,10 @@ def scrape():
     #tables is a list of dataframes.  Inspection found table[0] is desired one.
     mars_facts = tables[0].copy()
     mars_facts.rename(columns = {0:"Parameter", 1:"Value"}, inplace=True) #renaming headings so make sense.
-    mars_facts.to_html("mars_facts.html", index = False)
+    mars_html = mars_facts.to_html(index = False)
     browser.quit()
 
-    ##############################################################
+    #############################################################################################
     #########Getting information from Astrogeology Site - link to image page and title###########
     #setup for splinter
     executable_path = {'executable_path': 'c:/bin/chromedriver.exe'}
@@ -79,17 +80,16 @@ def scrape():
     hemisphere=[] #variable to hold hemisphere information
 
     for result in results:
-        
         try:
             test = result.find('a')["href"]#image page link from this location
-            name = result.find('h3').text
+            name = result.find('h3').text #name of image
             combine_url = base_url+test#add base to image location for next section where get image
             hemisphere.append({"title":name, "img_url":combine_url})
-        
         except AttributeError as e:
             print(e)
-
     browser.quit()
+
+    ############Taking links from above and opening to get images##########################
     #setup for splinter
     link=[] #variable to hold final link name
     for i in range(0,len(hemisphere)):
@@ -122,7 +122,7 @@ def scrape():
     output_dictionnary = {}
     output_dictionnary = {"Title":nasa_list[0]["Nasa_Title"],"Text":nasa_list[0]["Nasa_Text"]}
     output_dictionnary["Featured_Image"] = image_link
-    output_dictionnary["Mars_Table"] = "mars_facts.html"
+    output_dictionnary["Mars_Table"] = mars_html
     output_dictionnary.update({"Hemi_0":hemisphere[0]["title"],"Hemi_0_Img":hemisphere[0]["img_url"]})
     output_dictionnary.update({"Hemi_1":hemisphere[1]["title"],"Hemi_1_Img":hemisphere[1]["img_url"]})
     output_dictionnary.update({"Hemi_2":hemisphere[2]["title"],"Hemi_2_Img":hemisphere[2]["img_url"]})
