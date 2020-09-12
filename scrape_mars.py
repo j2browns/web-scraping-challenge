@@ -56,7 +56,8 @@ def scrape():
             break
     browser.quit()
 
-    #######Getting information table from Space-Facts######
+    ###############################################################
+    #######Getting information table from Space-Facts##############
     #setup for splinter
     executable_path = {'executable_path': 'c:/bin/chromedriver.exe'}
     browser = Browser('chrome', **executable_path, headless=True)
@@ -69,34 +70,62 @@ def scrape():
     mars_facts.to_html("mars_facts.html", index = False)
     browser.quit()
 
-    #########Getting information from Astrogeology Site###########
+    ##############################################################
+    #########Getting information from Astrogeology Site - link to image page and title###########
     #setup for splinter
     executable_path = {'executable_path': 'c:/bin/chromedriver.exe'}
     browser = Browser('chrome', **executable_path, headless=True)
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(url)
-    time.sleep(5) #added delay to make sure loads OK without issues
+    time.sleep(2) #added delay to make sure loads OK without issues
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
 
-    base_url = "https://astrogeology.usgs.gov"
+    base_url = "https://astrogeology.usgs.gov" #base to add on to hemisphere page in next section
     results = soup.find_all('div', class_='description')
 
-    hemisphere=[]
+    hemisphere=[] #variable to hold hemisphere information
 
     for result in results:
         
         try:
-            test = result.find('a')["href"]
+            test = result.find('a')["href"]#image page link from this location
             name = result.find('h3').text
-            combine_url = base_url+test
+            combine_url = base_url+test#add base to image location for next section where get image
             hemisphere.append({"title":name, "img_url":combine_url})
         
         except AttributeError as e:
             print(e)
 
     browser.quit()
+    #setup for splinter
+    link=[] #variable to hold final link name
+    for i in range(0,len(hemisphere)):
+        executable_path = {'executable_path': 'c:/bin/chromedriver.exe'}
+        browser = Browser('chrome', **executable_path, headless=True)
+        url = hemisphere[i]['img_url']
+        browser.visit(url)
+        time.sleep(2) #added delay to make sure loads OK without issues
 
+        html_1 = browser.html
+
+        #stepping through various levels in html to get to link
+        soup_1 = BeautifulSoup(html_1, 'html.parser')
+        test = soup_1.find('div', class_ = 'container')
+        test_1 = test.find('div', class_= 'downloads')
+        test_2 = test_1.find('ul')
+        test_3 = test_2.find_all('li')
+        link.append(test_3[1].find('a')["href"]) #second list element is desired link, first is thumbnail
+        browser.quit()
+
+    #below replaces hemisphere page link with hemisphere image link
+    for i in range(0,len(hemisphere)):
+        hemisphere[i]["img_url"]=link[i]
+
+    print(hemisphere)
+
+
+    #creating output dictionary
     output_dictionnary = {}
     output_dictionnary = {"Title":nasa_list[0]["Nasa_Title"],"Text":nasa_list[0]["Nasa_Text"]}
     output_dictionnary["Featured_Image"] = mars_images_url[0]
