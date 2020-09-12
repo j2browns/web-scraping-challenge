@@ -34,26 +34,18 @@ def scrape():
             print(e)
 
     #####Code for getting featured mars image from JPL site######
-
     #setup for splinter
     executable_path = {'executable_path': 'c:/bin/chromedriver.exe'}
     browser = Browser('chrome', **executable_path, headless=True)
-    url = 'http://www.jpl.nasa.gov/spaceimages/?search=&category=Mars#submit/'
+    url = 'http://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(url)
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
-    mars_images = soup.find_all('li', class_='slide')
-    #print(mars_image)
-    i=0
-    n=2
-    mars_images_url = []
-    for mars_image in mars_images:
-        image = mars_image.find('a')["data-fancybox-href"]
-        image_link = "http://www.jpl.nasa.gov"+image
-        mars_images_url.append(image_link)
-        i+=1
-        if i == n:
-            break
+    mars_images = soup.find_all('footer')
+    test_1 = mars_images[0].find('a', class_='button fancybox')["data-fancybox-href"]
+    image = test_1
+    image_link = "http://www.jpl.nasa.gov"+image
+    print(image_link)
     browser.quit()
 
     ###############################################################
@@ -115,7 +107,7 @@ def scrape():
         test_1 = test.find('div', class_= 'downloads')
         test_2 = test_1.find('ul')
         test_3 = test_2.find_all('li')
-        link.append(test_3[1].find('a')["href"]) #second list element is desired link, first is thumbnail
+        link.append(test_3[0].find('a')["href"]) #first list element is desired link, second is for Tiff that does not open correctly
         browser.quit()
 
     #below replaces hemisphere page link with hemisphere image link
@@ -123,6 +115,7 @@ def scrape():
         hemisphere[i]["img_url"]=link[i]
 
     print(hemisphere)
+    print('************************')
 
 
     #creating output dictionary
@@ -131,8 +124,10 @@ def scrape():
     output_dictionnary["Featured_Image"] = mars_images_url[0]
     output_dictionnary["Mars_Table"] = "mars_facts.html"
     output_dictionnary.update({"Hemi_0":hemisphere[0]["title"],"Hemi_0_Img":hemisphere[0]["img_url"]})
-    output_dictionnary.update({"Hemi_1":hemisphere[1]["title"],"Hemi_0_Img":hemisphere[1]["img_url"]})
+    output_dictionnary.update({"Hemi_1":hemisphere[1]["title"],"Hemi_1_Img":hemisphere[1]["img_url"]})
     output_dictionnary.update({"Hemi_2":hemisphere[2]["title"],"Hemi_2_Img":hemisphere[2]["img_url"]})
     output_dictionnary.update({"Hemi_3":hemisphere[3]["title"],"Hemi_3_Img":hemisphere[3]["img_url"]})
 
+    print("Output Dictionnary:")
+    print(output_dictionnary)
     return output_dictionnary

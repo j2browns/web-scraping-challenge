@@ -1,0 +1,27 @@
+  
+* {
+    box-sizing: border-box;
+  }
+
+
+.boxa {
+    height: 160px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: black;
+    background: white;
+    text-align: center; 
+    }
+
+.box_comb_a {
+    padding-top: 50px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 300px;
+    color: black;
+    background: white;
+    text-align: center;
+    vertical-align: center;
+    }
