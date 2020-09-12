@@ -3,6 +3,21 @@
     box-sizing: border-box;
   }
 
+.boxb table {
+    text-align: center;
+    font-size: larger
+    }
+
+.boxb th{
+    text-align: center;
+    font-size: larger
+    }
+
+.boxb td{
+    text-align: center;
+    font-size: larger
+    }
+
 
 .boxa {
     height: 160px;
@@ -24,4 +39,8 @@
     background: white;
     text-align: center;
     vertical-align: center;
+    }
+
+.box_comb_a h4{
+    text-align: center;
     }

@@ -13,19 +13,21 @@
 <body>
   <div class="container-fluid">
 
-    <div class="jumbotron text-center" style ="background-image: linear-gradient(to bottom  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0.9) 100%), url('/mars_attacks_banner.jpg')">
+    <div class="jumbotron text-center">
       <h1>Welcome to Mars</h1>
       <p>Here's a Bunch of Info About Mars</p>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data!</a></p>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <h2> Mars News Update: </h2>
-        <p><br></p>
-        <h3>{{ mars.Title}}</h3>
-        <p><br></p>
-        <p>{{ mars.Text}}</p>
-        <p><br></p>
+        <div class = "box_a">
+          <h2> Nasa Mars News Update: </h2>
+          <p><br></p>
+          <h3>{{ mars.Title}}</h3>
+          <p><br></p>
+          <p>{{ mars.Text}}</p>
+          <p><br></p>
+        </div>
       </div>
     </div>
 
@@ -35,8 +37,10 @@
         <img src=" {{mars.Featured_Image}}" alt="mars image" class = "img-fluid" alt = "Responsive image" style="width: 50%">
       </div>
       <div class="col-xs-12 col-sm-12 col-md-4">
-        <h3>Mars Details</h3>
-        {{(mars.Mars_Table) | safe}}
+        <div boxb>
+          <h3>Mars Details</h3>
+          {{(mars.Mars_Table) | safe}}
+        </div>
       </div>
     </div>
     <div class="row">
