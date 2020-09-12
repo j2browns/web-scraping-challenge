@@ -121,7 +121,7 @@ def scrape():
     #creating output dictionary
     output_dictionnary = {}
     output_dictionnary = {"Title":nasa_list[0]["Nasa_Title"],"Text":nasa_list[0]["Nasa_Text"]}
-    output_dictionnary["Featured_Image"] = mars_images_url[0]
+    output_dictionnary["Featured_Image"] = image_link
     output_dictionnary["Mars_Table"] = "mars_facts.html"
     output_dictionnary.update({"Hemi_0":hemisphere[0]["title"],"Hemi_0_Img":hemisphere[0]["img_url"]})
     output_dictionnary.update({"Hemi_1":hemisphere[1]["title"],"Hemi_1_Img":hemisphere[1]["img_url"]})
