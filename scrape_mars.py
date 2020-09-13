@@ -47,6 +47,9 @@ def scrape():
     image = test_1
     image_link = "http://www.jpl.nasa.gov"+image
     print(image_link)
+    test_2 = mars_images[0].find('a', class_='button fancybox')["data-title"]
+    img_name = test_2
+    print(img_name)
     browser.quit()
 
     ###############################################################
@@ -121,6 +124,7 @@ def scrape():
     #creating output dictionary
     output_dictionnary = {}
     output_dictionnary = {"Title":nasa_list[0]["Nasa_Title"],"Text":nasa_list[0]["Nasa_Text"]}
+    output_dictionnary["Featured_Image_Name"] = img_name
     output_dictionnary["Featured_Image"] = image_link
     output_dictionnary["Mars_Table"] = mars_html
     output_dictionnary.update({"Hemi_0":hemisphere[0]["title"],"Hemi_0_Img":hemisphere[0]["img_url"]})
