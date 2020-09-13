@@ -12,3 +12,5 @@ This assignment scrapes Mars related information from the web from a variety of 
 The ability to extract the necessary information from these sites is first demonstrated in a jupyter notebook (mission_to_mars.ipynb).  The functional code
 was then transferred into a function in a python program (scrape_mars).  The scraping function of this program is called from a Flask Server in the 
 Python code app.py.  The Flask server calls index.html which is used to display the information scraped from the web.
+
+Two image files are included: Final Screen Image 1 and Final Screen Image 2.  The final screen would not fit in one view (had to scroll down to see images).  Therefore split into two images. These combined are the final screen.
